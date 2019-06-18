@@ -33,16 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         gridLayout = findViewById(R.id.gridLayout);
 
-        playerChoices[0] = Player.NO;
-        playerChoices[1] = Player.NO;
-        playerChoices[2] = Player.NO;
-        playerChoices[3] = Player.NO;
-        playerChoices[4] = Player.NO;
-        playerChoices[5] = Player.NO;
-        playerChoices[6] = Player.NO;
-        playerChoices[7] = Player.NO;
-        playerChoices[8] = Player.NO;
-
+        assignLoop();
         btnReset = findViewById(R.id.btnReset);
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -58,41 +49,42 @@ public class MainActivity extends AppCompatActivity {
 
         int tiTag = Integer.parseInt(tappedImg.getTag().toString());
 
-        if (playerChoices[tiTag] == Player.NO  && !gameOver) {
+            if (playerChoices[tiTag] == Player.NO && !gameOver) {
 
-            playerChoices[tiTag] = currentPlayer;
+                playerChoices[tiTag] = currentPlayer;
 
-            if (currentPlayer == Player.ONE) {
-                tappedImg.setTranslationX(-2000);
-                tappedImg.setImageResource(R.drawable.lion);
-                currentPlayer = Player.TWO;
+                if (currentPlayer == Player.ONE) {
+                    tappedImg.setTranslationX(-2000);
+                    tappedImg.setImageResource(R.drawable.lion);
+                    currentPlayer = Player.TWO;
 
-                tappedImg.animate().translationXBy(2000).alpha(1).rotationBy(3600).setDuration(1000);
-            } else if (currentPlayer == Player.TWO) {
+                    tappedImg.animate().translationXBy(2000).alpha(1).rotationBy(3600).setDuration(1000);
+                } else if (currentPlayer == Player.TWO) {
 
-                tappedImg.setTranslationX(2000);
-                tappedImg.setImageResource(R.drawable.tiger);
-                currentPlayer = Player.ONE;
+                    tappedImg.setTranslationX(2000);
+                    tappedImg.setImageResource(R.drawable.tiger);
+                    currentPlayer = Player.ONE;
 
-                tappedImg.animate().translationXBy(-2000).alpha(1).rotationBy(3600).setDuration(1000);
-            }
-
-            for (int[] winnerColumn : winnerRowsColumns) {
-                if (playerChoices[winnerColumn[0]] == playerChoices[winnerColumn[1]] && playerChoices[winnerColumn[1]] == playerChoices[winnerColumn[2]] && playerChoices[winnerColumn[0]] != Player.NO) {
-
-                    btnReset.setVisibility(View.VISIBLE);
-                    gameOver = true;
-                    String winner = "";
-                    if (currentPlayer == Player.ONE) {
-                        winner = "PLAYER TWO";
-                    } else if (currentPlayer == Player.TWO) {
-                        winner = "PLAYER ONE";
-                    }
-                    Toast.makeText(this, winner + " is the Winner.", Toast.LENGTH_LONG).show();
+                    tappedImg.animate().translationXBy(-2000).alpha(1).rotationBy(3600).setDuration(1000);
                 }
+
+                for (int[] winnerColumn : winnerRowsColumns) {
+                    if (playerChoices[winnerColumn[0]] == playerChoices[winnerColumn[1]] && playerChoices[winnerColumn[1]] == playerChoices[winnerColumn[2]] && playerChoices[winnerColumn[0]] != Player.NO) {
+
+                        btnReset.setVisibility(View.VISIBLE);
+                        gameOver = true;
+                        String winner = "";
+                        if (currentPlayer == Player.ONE) {
+                            winner = "PLAYER TWO";
+                        } else if (currentPlayer == Player.TWO) {
+                            winner = "PLAYER ONE";
+                        }
+                        Toast.makeText(this, winner + " is the Winner.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
             }
 
-        }
     }
         // Resetting the Game
     private void ResetTheGame(){
@@ -107,16 +99,15 @@ public class MainActivity extends AppCompatActivity {
         currentPlayer = Player.ONE;
         gameOver = false;
 
-        playerChoices[0] = Player.NO;
-        playerChoices[1] = Player.NO;
-        playerChoices[2] = Player.NO;
-        playerChoices[3] = Player.NO;
-        playerChoices[4] = Player.NO;
-        playerChoices[5] = Player.NO;
-        playerChoices[6] = Player.NO;
-        playerChoices[7] = Player.NO;
-        playerChoices[8] = Player.NO;
+        assignLoop();
+        btnReset.setVisibility(View.GONE);
 
+    }
+
+    private void assignLoop(){
+        for (int i = 0; i< playerChoices.length;i++){
+            playerChoices[i] = Player.NO;
+        }
     }
 
 }
