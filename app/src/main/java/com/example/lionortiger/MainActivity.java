@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Player currentPlayer = Player.ONE;
+    private int counter;
 
     Player[] playerChoices = new Player[9];
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         gridLayout = findViewById(R.id.gridLayout);
 
         assignLoop();
+        counter = 0;
         btnReset = findViewById(R.id.btnReset);
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -49,9 +51,14 @@ public class MainActivity extends AppCompatActivity {
 
         int tiTag = Integer.parseInt(tappedImg.getTag().toString());
 
+
+
             if (playerChoices[tiTag] == Player.NO && !gameOver) {
 
+
+                counter++;
                 playerChoices[tiTag] = currentPlayer;
+
 
                 if (currentPlayer == Player.ONE) {
                     tappedImg.setTranslationX(-2000);
@@ -69,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 for (int[] winnerColumn : winnerRowsColumns) {
-                    if (playerChoices[winnerColumn[0]] == playerChoices[winnerColumn[1]] && playerChoices[winnerColumn[1]] == playerChoices[winnerColumn[2]] && playerChoices[winnerColumn[0]] != Player.NO) {
+                    if (playerChoices[winnerColumn[0]] == playerChoices[winnerColumn[1]] &&
+                            playerChoices[winnerColumn[1]] == playerChoices[winnerColumn[2]] &&
+                            playerChoices[winnerColumn[0]] != Player.NO) {
 
                         btnReset.setVisibility(View.VISIBLE);
                         gameOver = true;
@@ -82,8 +91,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, winner + " is the Winner.", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
+        if (counter == playerChoices.length) {     btnReset.setVisibility(View.VISIBLE);     gameOver = true;
+            Toast.makeText(this, "It's a draw!", Toast.LENGTH_LONG).show();
+            counter = 0;
+        }
 
     }
         // Resetting the Game
